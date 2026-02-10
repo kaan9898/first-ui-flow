@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Items</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4e73df, #1cc88a);
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .create-btn {
+            display: inline-block;
+            padding: 10px 18px;
+            background-color: #4e73df;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .create-btn:hover {
+            background-color: #2e59d9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #4e73df;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        .empty-message {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Product List</h1>
+    <a href="/items/new" class="create-btn">+ Create New Product</a>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.itemId}"></td>
+            <td th:text="${item.itemName}"></td>
+            <td th:text="${item.itemCategory}"></td>
+            <td th:text="${item.itemPrice}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+    <div class="empty-message" th:if="${#lists.isEmpty(items)}">
+        No items found. Create your first item!
+    </div>
+</div>
+</body>
+</html>
