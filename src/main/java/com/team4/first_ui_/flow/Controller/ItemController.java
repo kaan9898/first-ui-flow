@@ -31,4 +31,9 @@ public class ItemController {
         itemService.saveItem(item);
         return "redirect:/items";
     }
+    @PostMapping("/delete/{id}")
+    public String deleteItem(@PathVariable Long id) {
+        itemService.deleteItemById(id);
+        return "redirect:/items";
+    }
 }
