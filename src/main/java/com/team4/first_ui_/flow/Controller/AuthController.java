@@ -53,4 +53,10 @@ public class AuthController {
         users.add(new UserDTO(username, password));
         return "redirect:/login.html";
     }
+
+    @GetMapping("/error/403")
+    public String errorPage(Model model) {
+        model.addAttribute("message", "Something went wrong!");
+        return "error";
+    }
 }
