@@ -26,4 +26,9 @@ public class ItemController {
         model.addAttribute("item", new Item());
         return "item-form";
     }
+    @PostMapping("/saveItem")
+    public String saveItem(@ModelAttribute Item item) {
+        itemService.saveItem(item);
+        return "redirect:/items";
+    }
 }
