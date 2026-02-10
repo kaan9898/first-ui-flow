@@ -50,12 +50,16 @@ public class SecurityConfig {
                         .failureUrl("/login?error=true")
                         .permitAll()
                 )
+                .rememberMe(rememberMe -> {
+                    rememberMe.key("I'll-Always-Remember-You")
+                            .tokenValiditySeconds(7*24*60*60)
+                            .rememberMeParameter("I'll-Always-Remember-You");
+                })
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout=true")
                         .permitAll()
                 );
-
         return http.build();
     }
     @Bean
