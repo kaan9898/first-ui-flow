@@ -32,4 +32,30 @@ public class SecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(user1, user2, admin);
     }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "/signup", "/error").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/items").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/items/new").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/items/saveItem").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/items/deleteItem").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/perform_login")
+                        .defaultSuccessUrl("/items", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout=true")
+                        .permitAll()
+                );
+
+        return http.build();
+    }
 }
