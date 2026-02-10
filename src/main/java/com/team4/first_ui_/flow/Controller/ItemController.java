@@ -21,4 +21,9 @@ public class ItemController {
         model.addAttribute("items", itemService.getAllItems());
         return "items";
     }
+    @GetMapping("/new")
+    public String showCreateForm( Model model) {
+        model.addAttribute("item", new Item());
+        return "item-form";
+    }
 }
