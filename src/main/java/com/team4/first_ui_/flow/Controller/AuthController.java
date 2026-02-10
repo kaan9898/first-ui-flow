@@ -30,4 +30,27 @@ public class AuthController {
         model.addAttribute("error", "Invalid username or password");
         return "login";
     }
+    @GetMapping("/signup")
+    public String signupPage() {
+        return "signup";
+    }
+
+    @PostMapping("/signup")
+    public String signup(@RequestParam String username,
+                         @RequestParam String password,
+                         @RequestParam String confirmPassword,
+                         Model model) {
+        if (!password.equals(confirmPassword)) {
+            model.addAttribute("error", "Passwords do not match");
+            return "signup";
+        }
+        for (UserDTO u : users) {
+            if (u.getUsername().equals(username)) {
+                model.addAttribute("error", "Username already exists");
+                return "signup";
+            }
+        }
+        users.add(new UserDTO(username, password));
+        return "redirect:/login.html";
+    }
 }
