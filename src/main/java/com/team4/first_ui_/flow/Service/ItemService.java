@@ -19,4 +19,8 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
+    public void saveItem(Item item) {
+        itemRepository.save(item);
+    }
+
 }
