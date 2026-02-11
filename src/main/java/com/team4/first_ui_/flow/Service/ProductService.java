@@ -18,10 +18,10 @@ public class ProductService {
 
     private Product mapToEntity(Product product) {
         return Product.builder()
-                .productId(product.getProductId())
-                .productName(product.getProductName())
-                .productCategory(product.getProductCategory())
-                .productPrice(product.getProductPrice())
+                .ProductId(product.getProductId())
+                .ProductName(product.getProductName())
+                .ProductCategory(product.getProductCategory())
+                .ProductPrice(product.getProductPrice())
                 .build();
     }
 
