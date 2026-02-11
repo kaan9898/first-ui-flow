@@ -51,12 +51,12 @@ public class AuthController {
             }
         }
         users.add(new UserDTO(username, password));
-        return "redirect:/login.html";
+        return "redirect:/login";
     }
 
     @GetMapping("/error/403")
     public String errorPage(Model model) {
-        model.addAttribute("message", "Something went wrong!");
+        model.addAttribute("message", "Access denied!");
         return "error";
     }
 }
