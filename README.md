@@ -5,7 +5,7 @@ Project Description
 
 
 This project is a Spring Boot application that demonstrates:
-A simple item list and create flow
+A simple Product list and create flow
 In-memory storage (no database)
 Spring Security login system
 Role-based access control (USER and ADMIN)
@@ -20,10 +20,10 @@ Features
 Practical 1 – UI Flow
 
 
-GET /items → Shows list of items
-GET /items/new → Shows create item form
-POST /items → Saves item in memory and redirects to list
-Items are stored in memory using a Map (no database).
+GET /Products → Shows list of Products
+GET /Products/new → Shows create Product form
+POST /Products → Saves Product in memory and redirects to list
+Products are stored in memory using a Map (no database).
 
 
 Practical 2 – Login & Roles
@@ -33,9 +33,9 @@ In-memory users:
 admin / admin → ROLE_ADMIN
 user / user → ROLE_USER
 Access rules:
-/items → Accessible after login
-/items/new → ADMIN only
-POST /items → ADMIN only
+/Products → Accessible after login
+/Products/new → ADMIN only
+POST /Products → ADMIN only
 USER cannot access the create flow (both UI and backend restricted).
 
 
