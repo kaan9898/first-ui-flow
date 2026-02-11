@@ -1,6 +1,7 @@
 package com.team4.first_ui_.flow.Controller;
 
-import com.team4.first_ui_.flow.Model.Product;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;import com.team4.first_ui_.flow.Model.Product;
 import com.team4.first_ui_.flow.Service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,9 +31,19 @@ public class ProductController {
         model.addAttribute("Product", new Product());
         return "Product-form";
     }
+
+
     @PostMapping("/saveProduct")
-    public String saveProduct(@ModelAttribute Product Product) {
-        ProductService.saveProduct(Product);
+    public String saveProduct(
+            @Valid @ModelAttribute("Product") Product product,
+            BindingResult bindingResult,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "Product-form";
+        }
+
+        ProductService.saveProduct(product);
         return "redirect:/Products";
     }
     @PostMapping("/delete/{id}")
