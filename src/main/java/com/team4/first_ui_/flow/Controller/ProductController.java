@@ -20,13 +20,19 @@ public class ProductController {
     }
 
     @GetMapping
-    public String getAllProducts(Model model, Principal principal, @RequestParam(defaultValue = "0") int page) {
+    public String getAllProducts(Model model, Principal principal,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String sortDir) {
+
         int pageSize = 10;
-        Page<Product> productPage = ProductService.getProductsPage(page, pageSize);
+        Page<Product> productPage = ProductService.getProductsSorted(sortBy, sortDir, page, pageSize);
 
         model.addAttribute("Products", productPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productPage.getTotalPages());
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("sortDir", sortDir);
 
         if (principal != null) {
             model.addAttribute("username", principal.getName());

@@ -126,7 +126,28 @@
     </div>
 
 
-    <a href="Product-form.html" class="create-btn">+ Create New Product</a>
+    <a th:href="@{/Products/new}" class="create-btn">+ Create New Product</a>
+    <form method="get" action="/Products" class="sort-form">
+        <label>
+            Sort by:
+            <select name="sortBy" th:value="${sortBy}">
+                <option value="">None</option>
+                <option value="name" th:selected="${sortBy == 'name'}">Name</option>
+                <option value="price" th:selected="${sortBy == 'price'}">Price</option>
+            </select>
+        </label>
+
+        <label>
+            Direction:
+            <select name="sortDir" th:value="${sortDir}">
+                <option value="asc" th:selected="${sortDir == 'asc'}">Ascending</option>
+                <option value="desc" th:selected="${sortDir == 'desc'}">Descending</option>
+            </select>
+        </label>
+
+        <button type="submit">Sort</button>
+        <a th:href="@{/Products}">Reset</a>
+    </form>
     <table>
         <thead>
         <tr>
@@ -138,21 +159,22 @@
         </thead>
         <tbody>
         <tr th:each="Product : ${Products}">
-            <td th:text="${Product.ProductId}"></td>
-            <td th:text="${Product.ProductName}"></td>
-            <td th:text="${Product.ProductCategory}"></td>
-            <td th:text="${Product.ProductPrice}"></td>
+            <td th:text="${Product.productId}"></td>
+            <td th:text="${Product.productName}"></td>
+            <td th:text="${Product.productCategory}"></td>
+            <td th:text="${Product.productPrice}"></td>
 
         </tr>
         </tbody>
     </table>
-    <div class="empty-message" th:if="${#lists.isEmpty(Products)}">
-        No Products found. Create your first Product!
-    </div>
-    <div class="pagination">
-        <a th:classappend="${totalPages == 0} ? 'disabled'" th:href="@{/Products(page=${currentPage - 1})}">Previous</a>
-        <span>Page <span th:text="${totalPages == 0 ? 0 : currentPage + 1}"></span> of <span th:text="${totalPages}"></span></span>
-        <a th:classappend="${totalPages == 0} ? 'disabled'" th:href="@{/Products(page=${currentPage + 1})}">Next</a>
+    <div class="pagination" th:if="${totalPages > 0}">
+        <a th:if="${currentPage > 0}"
+           th:href="@{/Products(page=${currentPage - 1}, sortBy=${sortBy}, sortDir=${sortDir})}">Previous</a>
+
+        <span>Page <span th:text="${currentPage + 1}"></span> of <span th:text="${totalPages}"></span></span>
+
+        <a th:if="${currentPage + 1 < totalPages}"
+           th:href="@{/Products(page=${currentPage + 1}, sortBy=${sortBy}, sortDir=${sortDir})}">Next</a>
     </div>
 </div>
 </body>
