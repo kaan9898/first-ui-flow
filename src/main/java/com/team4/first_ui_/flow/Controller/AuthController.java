@@ -24,7 +24,7 @@ public class AuthController {
                         Model model) {
         for (UserDTO u : users) {
             if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
-                return "redirect:/items";
+                return "redirect:/Products";
             }
         }
         model.addAttribute("error", "Invalid username or password");

@@ -37,16 +37,16 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/signup", "/error").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/items").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/items/new").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/items/saveItem").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/items/deleteItem").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/Products").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/Products/new").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/Products/saveProduct").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/Products/deleteProduct").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/perform_login")
-                        .defaultSuccessUrl("/items", true)
+                        .defaultSuccessUrl("/Products", true)
                         .failureUrl("/login?error=true")
                         .permitAll()
                 )

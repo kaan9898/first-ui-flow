@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Items</title>
+    <title>Products</title>
 
     <style>
         body {
@@ -76,7 +76,7 @@
 
 <div class="container">
     <h1>Product List</h1>
-    <a href="/items/new" class="create-btn">+ Create New Product</a>
+    <a href="/Products/new" class="create-btn">+ Create New Product</a>
     <table>
         <thead>
         <tr>
@@ -87,17 +87,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item : ${items}">
-            <td th:text="${item.itemId}"></td>
-            <td th:text="${item.itemName}"></td>
-            <td th:text="${item.itemCategory}"></td>
-            <td th:text="${item.itemPrice}"></td>
+        <tr th:each="Product : ${Products}">
+            <td th:text="${Product.ProductId}"></td>
+            <td th:text="${Product.ProductName}"></td>
+            <td th:text="${Product.ProductCategory}"></td>
+            <td th:text="${Product.ProductPrice}"></td>
 
         </tr>
         </tbody>
     </table>
-    <div class="empty-message" th:if="${#lists.isEmpty(items)}">
-        No items found. Create your first item!
+    <div class="empty-message" th:if="${#lists.isEmpty(Products)}">
+        No Products found. Create your first Product!
     </div>
 </div>
 </body>
