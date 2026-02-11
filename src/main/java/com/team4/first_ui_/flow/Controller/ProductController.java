@@ -5,6 +5,7 @@ import com.team4.first_ui_.flow.Service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/Products")
@@ -17,8 +18,11 @@ public class ProductController {
     }
 
     @GetMapping
-    public String getAllProducts( Model model) {
+    public String getAllProducts( Model model, Principal principal) {
         model.addAttribute("Products", ProductService.getAllProducts());
+        if (principal != null) {
+            model.addAttribute("username", principal.getName());
+        }
         return "Products";
     }
     @GetMapping("/new")
