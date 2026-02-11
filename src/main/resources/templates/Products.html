@@ -202,7 +202,6 @@
         </div>
     </div>
 
-
     <a th:href="@{/Products/new}" class="create-btn">+ Create New Product</a>
     <form method="get" action="/Products" class="sort-form">
         <label>
@@ -221,7 +220,6 @@
                 <option value="desc" th:selected="${sortDir == 'desc'}">Descending</option>
             </select>
         </label>
-
         <button type="submit">Sort</button>
         <a th:href="@{/Products}">Reset</a>
     </form>
