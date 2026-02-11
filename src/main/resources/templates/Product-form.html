@@ -103,35 +103,35 @@
         <label>Name:</label>
         <label>
             <input type="text"
-                   th:field="*{ProductName}"
+                   th:field="*{productName}"
                    th:classappend="${#fields.hasErrors('ProductName')} ? 'error-field'" />
         </label>
         <div class="error"
              th:if="${#fields.hasErrors('ProductName')}"
-             th:errors="*{ProductName}"></div>
+             th:errors="*{productName}"></div>
 
 
         <label>Category:</label>
         <label>
             <input type="text"
-                   th:field="*{ProductCategory}"
+                   th:field="*{productCategory}"
                    th:classappend="${#fields.hasErrors('ProductCategory')} ? 'error-field'" />
         </label>
         <div class="error"
              th:if="${#fields.hasErrors('ProductCategory')}"
-             th:errors="*{ProductCategory}"></div>
+             th:errors="*{productCategory}"></div>
 
 
         <label>Price:</label>
         <label>
             <input type="number"
                    step="0.01"
-                   th:field="*{ProductPrice}"
+                   th:field="*{productPrice}"
                    th:classappend="${#fields.hasErrors('ProductPrice')} ? 'error-field'" />
         </label>
         <div class="error"
              th:if="${#fields.hasErrors('ProductPrice')}"
-             th:errors="*{ProductPrice}"></div>
+             th:errors="*{productPrice}"></div>
 
         <button type="submit">Save</button>
     </form>

@@ -16,23 +16,23 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int ProductId;
+    private int productId;
     @Column(name = "name")
     @NotBlank(message = "name is required")
-    private String ProductName;
+    private String productName;
     @Column(name = "category")
     @NotBlank(message = "Category is required")
-    private String ProductCategory;
+    private String productCategory;
     @Column(name = "price")
     @NotNull(message = "Price is required")
     @Positive(message = "Price must be greater than 0")
-    private Double ProductPrice;
+    private Double productPrice;
 
-    public Product(int ProductId, String ProductName, String ProductCategory, Double ProductPrice) {
-        this.ProductId = ProductId;
-        this.ProductName = ProductName;
-        this.ProductCategory = ProductCategory;
-        this.ProductPrice = ProductPrice;
+    public Product(int productId, String productName, String productCategory, Double productPrice) {
+        this.productId = productId;
+        this.productName = productName;
+        this.productCategory = productCategory;
+        this.productPrice = productPrice;
     }
 
 }

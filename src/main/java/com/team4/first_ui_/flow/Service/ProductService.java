@@ -5,6 +5,7 @@ import com.team4.first_ui_.flow.Repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,10 +21,10 @@ public class ProductService {
 
     private Product mapToEntity(Product product) {
         return Product.builder()
-                .ProductId(product.getProductId())
-                .ProductName(product.getProductName())
-                .ProductCategory(product.getProductCategory())
-                .ProductPrice(product.getProductPrice())
+                .productId(product.getProductId())
+                .productName(product.getProductName())
+                .productCategory(product.getProductCategory())
+                .productPrice(product.getProductPrice())
                 .build();
     }
 
@@ -42,6 +43,22 @@ public class ProductService {
 
     public Page<Product> getProductsPage(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
+        return ProductRepository.findAll(pageable);
+    }
+
+    public Page<Product> getProductsSorted(String sortBy, String sortDir, int page, int size) {
+
+        Sort sort = Sort.unsorted();
+
+        if (sortBy != null && sortDir != null) {
+            if (sortBy.equals("name")) {
+                sort = sortDir.equals("asc") ? Sort.by("productName").ascending() : Sort.by("productName").descending();
+            } else if (sortBy.equals("price")) {
+                sort = sortDir.equals("asc") ? Sort.by("productPrice").ascending() : Sort.by("productPrice").descending();
+            }
+        }
+
+        Pageable pageable = PageRequest.of(page, size, sort);
         return ProductRepository.findAll(pageable);
     }
 }
