@@ -96,6 +96,11 @@
             font-weight: bold;
             color: #333;
         }
+
+        .pagination a.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
     </style>
 </head>
 
@@ -143,6 +148,11 @@
     </table>
     <div class="empty-message" th:if="${#lists.isEmpty(Products)}">
         No Products found. Create your first Product!
+    </div>
+    <div class="pagination">
+        <a th:classappend="${totalPages == 0} ? 'disabled'" th:href="@{/Products(page=${currentPage - 1})}">Previous</a>
+        <span>Page <span th:text="${totalPages == 0 ? 0 : currentPage + 1}"></span> of <span th:text="${totalPages}"></span></span>
+        <a th:classappend="${totalPages == 0} ? 'disabled'" th:href="@{/Products(page=${currentPage + 1})}">Next</a>
     </div>
 </div>
 </body>

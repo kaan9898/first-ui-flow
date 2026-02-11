@@ -2,10 +2,12 @@ package com.team4.first_ui_.flow.Service;
 
 import com.team4.first_ui_.flow.Model.Product;
 import com.team4.first_ui_.flow.Repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -38,4 +40,8 @@ public class ProductService {
         ProductRepository.deleteById(id.intValue());
     }
 
+    public Page<Product> getProductsPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ProductRepository.findAll(pageable);
+    }
 }
