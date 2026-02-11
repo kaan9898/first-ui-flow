@@ -77,6 +77,16 @@
         .back-link:hover {
             text-decoration: underline;
         }
+
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .error-field {
+            border: 1px solid #dc3545 !important;
+        }
     </style>
 </head>
 
@@ -86,16 +96,47 @@
 
     <h1>Create Product</h1>
 
-    <form th:action="@{/Products/saveProduct}" th:object="${Product}" method="post">
+    <form th:action="@{/Products/saveProduct}"
+          th:object="${Product}"
+          method="post">
+
         <label>Name:</label>
-        <input type="text" th:field="*{ProductName}" />
+        <label>
+            <input type="text"
+                   th:field="*{ProductName}"
+                   th:classappend="${#fields.hasErrors('ProductName')} ? 'error-field'" />
+        </label>
+        <div class="error"
+             th:if="${#fields.hasErrors('ProductName')}"
+             th:errors="*{ProductName}"></div>
+
+
         <label>Category:</label>
-        <input type="text" th:field="*{ProductCategory}" />
+        <label>
+            <input type="text"
+                   th:field="*{ProductCategory}"
+                   th:classappend="${#fields.hasErrors('ProductCategory')} ? 'error-field'" />
+        </label>
+        <div class="error"
+             th:if="${#fields.hasErrors('ProductCategory')}"
+             th:errors="*{ProductCategory}"></div>
+
+
         <label>Price:</label>
-        <input type="number" step="0.01" th:field="*{ProductPrice}" />
+        <label>
+            <input type="number"
+                   step="0.01"
+                   th:field="*{ProductPrice}"
+                   th:classappend="${#fields.hasErrors('ProductPrice')} ? 'error-field'" />
+        </label>
+        <div class="error"
+             th:if="${#fields.hasErrors('ProductPrice')}"
+             th:errors="*{ProductPrice}"></div>
+
         <button type="submit">Save</button>
     </form>
-    <a href="/Products" class="back-link">Back to List</a>
+
+    <a href="Products.html" class="back-link">Back to List</a>
 </div>
 </body>
 </html>
