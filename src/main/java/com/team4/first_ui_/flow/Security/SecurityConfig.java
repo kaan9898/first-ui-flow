@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,14 +37,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/signup", "/error").permitAll()
                         .requestMatchers(HttpMethod.GET, "/Products").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/Products/new").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/Products/saveProduct").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/Products/deleteProduct").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/Products/updateProduct").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/Products/getProduct").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/Products/getAllProducts").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/Products/getAllProductsByCategory").hasRole("ADMIN")
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/perform_login")
@@ -50,18 +61,20 @@ public class SecurityConfig {
                         .failureUrl("/login?error=true")
                         .permitAll()
                 )
-                .rememberMe(rememberMe -> {
-                    rememberMe.key("I'll-Always-Remember-You")
-                            .tokenValiditySeconds(7*24*60*60)
-                            .rememberMeParameter("I'll-Always-Remember-You");
-                })
+                .rememberMe(rememberMe -> rememberMe
+                        .key("I'll-Always-Remember-You")
+                        .tokenValiditySeconds(7*24*60*60)
+                        .rememberMeParameter("I'll-Always-Remember-You")
+                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout=true")
                         .permitAll()
                 );
+
         return http.build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
