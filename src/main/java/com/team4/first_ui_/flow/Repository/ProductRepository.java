@@ -1,12 +1,8 @@
 package com.team4.first_ui_.flow.Repository;
 
 import com.team4.first_ui_.flow.Model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-public interface ProductRepository {
-
-    List<Product> findAll();
-    void save(Product Product);
-    void deleteById(Long id);
 }
